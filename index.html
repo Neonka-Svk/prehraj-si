@@ -18,45 +18,48 @@
     <link href="./styles/mainStyle.css" rel="stylesheet">
 </head>
 <body>
-    <h2 class="mainTitle">M3U Prehrávač</h2>
-    <div class="buttons">
-        <button class="btn" onclick="loadCustomPlaylist()"><i class="fa-solid fa-list right"></i>Vybrať playlist</button>
-    </div>
-    <div class="hidden filterSelect">
-        <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
-        <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
-        <select class="btn" id="groupFilter"></select>
-    </div>
+    <div class="main-wrapper">
+        <h2 class="mainTitle">M3U Prehrávač</h2>
+        <div class="buttons">
+            <button class="btn" onclick="loadCustomPlaylist()"><i class="fa-solid fa-list right"></i>Vybrať playlist</button>
+        </div>
+        <div class="hidden filterSelect">
+            <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
+            <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
+            <select class="btn" id="groupFilter"></select>
+        </div>
 
-    <div class="mainContent">
-        <div class="playlistWrapper">
-            <div id="playlist" class="empty scroll-shadows">
-                <h3>Nebol načítaný žiadny playlist!</h3>
+        <div class="mainContent">
+            <div class="playlistWrapper">
+                <div id="playlist" class="empty scroll-shadows">
+                    <h3>Nebol načítaný žiadny playlist!</h3>
+                </div>
+            </div>
+            <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
+        </div>
+
+        <div class="recordArea">
+            <p>Nemáš čas a chceš si pozrieť záznam? Nahraj si aktuálny prenos a pozri si ho v pohode neskôr. 👈</p>
+            <div>
+                <button class="start-recording btn" disabled title="Ak chceš nahrávať, je potrebné, aby bol načítaný playlist a zapnutý stream!">
+                    <i class="fa-solid fa-clapperboard right"></i> Vytvoriť záznam
+                </button>
             </div>
         </div>
-        <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
-    </div>
 
-    <p style="margin-top: 20px; text-align: center; color: #f2f2f2;">Nemáš čas a chceš si pozrieť záznam? Nahraj si aktuálny prenos a pozri si ho v pohode neskôr. 👈</p>
-    <div class="" style="display: flex; gap: 10px; justify-content: center; margin: 0 20px;">
-        <button class="start-recording btn" disabled title="Ak chceš nahrávať, je potrebné, aby bol načítaný playlist a zapnutý stream!">
-            <i class="fa-solid fa-clapperboard right"></i> Vytvoriť záznam
-        </button>
-    </div>
-
-    <div class="copyPopup">
-        <p>✅ URL adresa skopírovaná!</p>
-    </div>
-
-    <div class="infoPanel">
-        <div>
-            <i class="fa-solid fa-circle-info"></i>
-            <p>Niektoré streamy fungujú, aj v prehliadači, aj vo VLC. Avšak niektoré fungujú, buď tu, alebo vo VLC!</p>
+        <div class="copyPopup">
+            <p>✅ URL adresa skopírovaná!</p>
         </div>
-    </div>
 
-    <div class="verticalSpace"></div>
-    
+        <div class="infoPanel">
+            <div>
+                <i class="fa-solid fa-circle-info"></i>
+                <p>Niektoré streamy fungujú, aj v prehliadači, aj vo VLC. Avšak niektoré fungujú, buď tu, alebo vo VLC!</p>
+            </div>
+        </div>
+
+        <div class="verticalSpace"></div>
+    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-http-streaming/3.0.0/videojs-http-streaming.min.js"></script>
     <script src="./scripts/mainJs.js"></script>

@@ -10,6 +10,11 @@ body {
     max-width: 1400px;
     margin: 0 auto;
 }
+
+.main-wrapper {
+    margin: 0 15px;
+}
+
 #playlist {
     display: flex;
     flex-direction: column;
@@ -83,7 +88,6 @@ body {
     color: white;
     font-weight: 500;
     border-radius: 20px;
-    margin-bottom: 12px;
     position: relative;
     overflow: hidden;
     font-family: "Comfortaa", sans-serif;
@@ -95,6 +99,7 @@ body {
 
 .playlist-item {
     justify-content: space-between;
+    margin-bottom: 12px;
 }
 
 .btn {
@@ -208,14 +213,12 @@ body {
     font-weight: 700;
 }
 .mainContent {
-    /* position: relative; */
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 20px;
     background: #505050;
     padding: 20px;
     border-radius: 20px;
-    margin: 0 15px;
     overflow: hidden;
 }
 .buttons {
@@ -492,7 +495,7 @@ i.left, svg.left {
     border-color: #0081ab;
     background: #93d5eb;
     color: #0081ab;
-    padding: 10px;
+    padding: 0 10px;
     font-weight: 600;
     gap: 5px;
     font-size: 14px;
@@ -500,6 +503,19 @@ i.left, svg.left {
 
 .infoPanel div i, .infoPanel div svg {
     height: 20px;
+}
+
+.recordArea p {
+    margin-top: 20px; 
+    text-align: center; 
+    color: #f2f2f2;
+}
+
+.recordArea div {
+    display: flex; 
+    gap: 10px; 
+    justify-content: center;
+    margin: 0 20px;
 }
 
 @keyframes pulse {
@@ -516,7 +532,7 @@ i.left, svg.left {
     }
 }
 
-@media (max-width: 1100px) {
+@media screen and (max-width: 1100px) {
     .mainContent {
         grid-template-columns: 1fr;
     }
@@ -529,9 +545,64 @@ i.left, svg.left {
         position: relative;
         left: 50%;
         transform: translateX(-50%);
+        margin-bottom: 5px;
     }
     #playlist h3 {
         font-size: 16px;
         padding: 10px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .recordArea {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 560px) {
+    .playlistWrapper {
+        max-width: 100%;
+        left: unset;
+        transform: none;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .mainTitle {
+        font-size: 28px;
+    }
+    .infoPanel {
+        max-width: 100%;
+    }
+    #playlist h3 {
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 448px) {
+    .playlist-item img.vlc, .playlist-item img.google {
+        width: 52px;
+    }
+    .playlist-item a {
+        padding: 0 10px 0 5px;
+        font-size: 13px;
+    }
+
+    .filterLabel {
+        font-size: 13px;
+    }
+
+    .playlist-item a img {
+        width: 35px;
+    }
+
+    .playlist-item .copyURL {
+        padding: 3px 6px;
+    }
+
+    .playlist-item .copyURL svg, .playlist-item .copyURL i {
+        height: 13px;
+        position: relative;
+        bottom: 1px;
     }
 }

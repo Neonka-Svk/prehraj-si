@@ -95,7 +95,7 @@ mainWindow.onbeforeunload = function () {
 function loadCustomPlaylist() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.m3u';
+    input.accept = '.m3u,.txt';
     input.style.display = 'none';
     input.onchange = function() {
         const file = input.files[0];

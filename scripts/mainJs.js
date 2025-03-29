@@ -1,8 +1,12 @@
 
 let windowFeatures, popupWindow;
-let recordBtn = document.querySelector('.start-recording');
+let recordBtn = document.querySelector(".start-recording");
+let recordArea = document.querySelector(".recordArea");
 const mainWindow = window;
 let mainHtml;
+
+if (navigator.platform.includes("iphone") || navigator.platform.includes("ipad") || navigator.platform.includes("android")) 
+    recordArea.style.display = "none";
 
 function createNewWindow() {
     let recordBtnInMain = mainWindow.document.querySelector(".start-recording");
@@ -80,7 +84,7 @@ function createNewWindow() {
 
     popupWindow.onbeforeunload = function () {
         if (recordBtnInMain.hasAttribute("disabled")) recordBtnInMain.removeAttribute("disabled");
-        videoPlayerFullscreen.classList.remove("showInFullscreen");
+        if (videoPlayerFullscreen.classList.contains("showInFullscreen")) videoPlayerFullscreen.classList.remove("showInFullscreen");
         mainHtml.style.overflow = "auto";
     };
 

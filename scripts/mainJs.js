@@ -5,7 +5,9 @@ let recordArea = document.querySelector(".recordArea");
 const mainWindow = window;
 let mainHtml;
 
-if (navigator.platform.includes("iphone") || navigator.platform.includes("ipad") || navigator.platform.includes("android")) 
+let currentPlatform = navigator.platform.toLowerCase();
+
+if (currentPlatform.includes("iphone") || currentPlatform.includes("ipad") || currentPlatform.includes("android") || currentPlatform.includes("ipod") || currentPlatform.includes("blackberry")) 
     recordArea.style.display = "none";
 
 function createNewWindow() {

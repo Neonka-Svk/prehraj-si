@@ -5,9 +5,17 @@ let recordArea = document.querySelector(".recordArea");
 const mainWindow = window;
 let mainHtml;
 
-let currentPlatform = navigator.platform.toLowerCase();
+try {
+    if (window.trustedTypes) {
+        window.trustedTypes.createPolicy('default', {createHTML: (string, sink) => string})
+    }
+} catch (error) {}
 
-if (currentPlatform.includes("iphone") || currentPlatform.includes("ipad") || currentPlatform.includes("android") || currentPlatform.includes("ipod") || currentPlatform.includes("blackberry")) 
+function isMobile() {
+    return /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
+
+if (isMobile()) 
     recordArea.style.display = "none";
 
 function createNewWindow() {
@@ -43,7 +51,7 @@ function createNewWindow() {
 
     if (window.focus) popupWindow.focus();
 
-    popupWindow.document.write(`
+    popupWindow.document.body.innerHTML = `
         <html>
         <head>
             <title>Nahraj si záznam z tvojej obľúbenej stanice!</title>
@@ -73,7 +81,7 @@ function createNewWindow() {
                 Stiahnuť nahrávku
             </a>
         </body>
-        </html>`);
+        </html>`;
 
     const customCss = popupWindow.document.createElement('link');
     customCss.rel = "stylesheet";

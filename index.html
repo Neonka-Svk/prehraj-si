@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U Prehrávač</title>
+    <link rel="icon" type="image/x-icon" href="./icons/tv-64.ico">
+    <script src="https://cdn.dashjs.org/latest/dash.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video-js.min.css" rel="stylesheet"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/7.10.2/video.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <link href="./styles/mainStyle.css" rel="stylesheet">
+</head>
+<body>
+    <h2 class="mainTitle">M3U Prehrávač</h2>
+    <div class="buttons">
+        <button class="btn" onclick="loadCustomPlaylist()"><i class="fa-solid fa-list right"></i>Vybrať playlist</button>
+    </div>
+    <div class="hidden filterSelect">
+        <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
+        <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
+        <select class="btn" id="groupFilter"></select>
+    </div>
+
+    <div class="mainContent">
+        <div class="playlistWrapper">
+            <div id="playlist" class="empty scroll-shadows">
+                <h3>Nebol načítaný žiadny playlist!</h3>
+            </div>
+        </div>
+        <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
+    </div>
+
+    <p style="margin-top: 20px; text-align: center; color: #f2f2f2;">Nemáš čas a chceš si pozrieť záznam? Nahraj si aktuálny prenos a pozri si ho v pohode neskôr. 👈</p>
+    <div class="" style="display: flex; gap: 10px; justify-content: center; margin: 0 20px;">
+        <button class="start-recording btn" disabled title="Ak chceš nahrávať, je potrebné, aby bol načítaný playlist a zapnutý stream!">
+            <i class="fa-solid fa-clapperboard right"></i> Vytvoriť záznam
+        </button>
+    </div>
+
+    <div class="copyPopup">
+        <p>✅ URL adresa skopírovaná!</p>
+    </div>
+
+    <div class="infoPanel">
+        <div>
+            <i class="fa-solid fa-circle-info"></i>
+            <p>Niektoré streamy fungujú, aj v prehliadači, aj vo VLC. Avšak niektoré fungujú, buď tu, alebo vo VLC!</p>
+        </div>
+    </div>
+
+    <div class="verticalSpace"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-http-streaming/3.0.0/videojs-http-streaming.min.js"></script>
+    <script src="./scripts/mainJs.js"></script>
+</body>
+</html>

@@ -163,7 +163,8 @@ playlistElement.classList.remove("empty");
         line = line.trim();
         if (line.startsWith('#EXTINF')) {
             // Extract channel name
-            const matchTitle = line.match(/tvg-name="(.*?)"/);
+            // const matchTitle = line.match(/tvg-name="(.*?)"/);
+            const matchTitle = line.match(/,(.*)$/);
             currentTitle = matchTitle && matchTitle[1] ? matchTitle[1] : "Bez názvu";
             // if (currentTitle.length > 22) currentTitle = currentTitle.substring(0, 19) + "...";
 

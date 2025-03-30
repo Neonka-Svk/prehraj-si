@@ -329,7 +329,7 @@ i.left, svg.left {
 }
 
 .verticalSpace {
-    height: 100px;
+    height: 80px;
 }
 
 .download.btn {
@@ -520,6 +520,27 @@ i.left, svg.left {
     gap: 10px; 
     justify-content: center;
     margin: 0 20px;
+}
+
+.testYourLink {
+    text-align: center; 
+    color: #f2f2f2;
+    margin-top: 30px;
+}
+
+.testYourLink span {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.testYourLink a {
+    color: #f2f2f2;
+    font-weight: bold;
+    transition: all 0.15s ease-in-out;
+}
+
+.testYourLink a:hover {
+    color: #33ff409c;
 }
 
 @keyframes pulse {

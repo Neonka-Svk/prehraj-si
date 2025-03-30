@@ -30,12 +30,22 @@
         </div>
 
         <div class="mainContent">
-            <div class="playlistWrapper">
-                <div id="playlist" class="empty scroll-shadows">
-                    <h3>Nebol načítaný žiadny playlist!</h3>
+            <div class="currentlyPlaying">
+                <div class="bars">
+                    <span></span>
+                    <span></span>
+                    <span></span>
                 </div>
+                <p>Práve sa prehráva - <span class="channelName">najlepší program 🦦</span></p>
             </div>
-            <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
+            <div class="playVideoDiv">
+                <div class="playlistWrapper">
+                    <div id="playlist" class="empty scroll-shadows">
+                        <h3>Nebol načítaný žiadny playlist!</h3>
+                    </div>
+                </div>
+                <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
+            </div>
         </div>
 
         <div class="recordArea">

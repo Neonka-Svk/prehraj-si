@@ -289,7 +289,7 @@ function updatePlaylistDisplay(selectedGroup, channelsByGroup) {
             link.textContent = `${index + 1}. ${channel.title.trim()}`;
             link.onclick = channel.inVLC === "true" ? 
                 () => downloadM3U(channel.url, channel.title.split('(')[0]) :
-                () => playStream(channel.url);
+                () => playStream(channel.url, channel.title.trim())
             if (channel.inGoogle === "true") link.onclick = "";
 
             if (channel.logo) {
@@ -358,8 +358,21 @@ function updatePlaylistDisplay(selectedGroup, channelsByGroup) {
     }
 }
 
-function playStream(url) {
+function playlistItems() {
+    const playlistItems = document.querySelectorAll(".playlist-item");
+
+    playlistItems.forEach(item => {
+        item.addEventListener("click", function () {
+            let selectedItem = document.querySelector(".playlist-item.selected");
+            if (selectedItem) selectedItem.classList.remove("selected");
+            this.classList.add("selected");
+        });
+    });
+}
+
+function playStream(url, title) {
     var player = videojs('videoPlayer');
+    playlistItems();
     
     if (url.endsWith('.mpd')) {
         player.src({
@@ -379,9 +392,14 @@ function playStream(url) {
     }
 
     player.ready(function () {
-        player.play();
-        if (recordBtn.hasAttribute("disabled")) recordBtn.removeAttribute("disabled");
-        recordBtn.title = "";
+        try {
+            player.play();
+            document.querySelector(".channelName").innerHTML = title;
+            const currentlyPlaying = document.querySelector(".currentlyPlaying");
+            if (!currentlyPlaying.classList.contains("visible")) currentlyPlaying.classList.add("visible");
+            if (recordBtn.hasAttribute("disabled")) recordBtn.removeAttribute("disabled");
+            recordBtn.title = "";
+        } catch {}
     });
     
 }

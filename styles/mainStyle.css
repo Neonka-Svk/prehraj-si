@@ -673,9 +673,11 @@ i.left, svg.left {
 
 @media screen and (max-width: 560px) {
     .playlistWrapper {
-        max-width: 100%;
-        left: unset;
-        transform: none;
+        max-width: 90%;
+    }
+
+    .playlist-group {
+        width: 95%;
     }
 }
 

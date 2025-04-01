@@ -15,7 +15,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/solid.min.css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     <link href="./styles/mainStyle.css" rel="stylesheet">
+    <link href="./styles/HLSplayer.css" rel="stylesheet">
 </head>
 <body>
     <div class="main-wrapper">
@@ -24,19 +28,21 @@
             <button class="btn" onclick="loadCustomPlaylist()"><i class="fa-solid fa-list right"></i>Vybrať playlist</button>
         </div>
         <div class="hidden filterSelect">
-            <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
-            <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
-            <select class="btn" id="groupFilter"></select>
+            <div>
+                <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
+                <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
+                <select class="btn" id="groupFilter"></select>
+            </div>
         </div>
 
         <div class="mainContent">
             <div class="currentlyPlaying">
-                <div class="bars">
+                <div class="bars withoutAnim">
                     <span></span>
                     <span></span>
                     <span></span>
                 </div>
-                <p>Práve sa prehráva - <span class="channelName">najlepší program 🦦</span></p>
+                <p><span class="defaultText statusText">Práve sa prehráva -</span> <span class="channelName">najlepší program 🦦</span></p>
             </div>
             <div class="playVideoDiv">
                 <div class="playlistWrapper">
@@ -44,10 +50,36 @@
                         <h3>Nebol načítaný žiadny playlist!</h3>
                     </div>
                 </div>
-                <video id="videoPlayer" class="video-js vjs-default-skin" controls></video>
+                <div>
+                    <video id="videoPlayer" class="video-js vjs-default-skin" controls playsinline></video>
+                    <div id="video_player" class="paused">
+                        <div class="loading_indicator"></div>
+                        <video id="videoPlayerHLS" autoplay playsinline></video>
+                        <div class="video_controls active">
+                            <div class="video_controls-list">
+                                <div class="video_controls-left">
+                                    <span class="icon">
+                                        <i class="material-icons play_pause" title="play" style="font-size: 28px;">play_arrow</i>
+                                    </span>
+                                    <span class="icon">
+                                        <i class="material-icons volume" style="font-size: 24px;">volume_up</i>
+                                        <div class="volume-container">
+                                            <div class="volume-progress"></div>
+                                            <input type="range" min="0" max="100" value="100" class="volume_range">
+                                        </div>
+                                    </span>
+                                </div>
+                                <div class="video_controls-right">
+                                    <span class="icon">
+                                        <i class="material-icons fullscreen_mode" style="font-size: 30px;">fullscreen</i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
         <div class="recordArea">
             <p>Nemáš čas a chceš si pozrieť záznam? Nahraj si aktuálny prenos a pozri si ho v pohode neskôr. 👈</p>
             <div>
@@ -76,6 +108,8 @@
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/video.js/8.3.0/video.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-http-streaming/3.0.0/videojs-http-streaming.min.js"></script>
+    <script src="./scripts/playlist.js"></script>
     <script src="./scripts/mainJs.js"></script>
+    <script src="./scripts/HLSplayer.js"></script>
 </body>
 </html>

@@ -32,10 +32,10 @@ function setupVideoFeedback() {
         const video = document.querySelector('.video-feedback');
         video.srcObject = stream;
         video.play();
-        video.classList.toggle("active");
+        video.classList.add("active");
     } else {
         console.warn('No stream available');
-        video.classList.toggle("active");
+        if (video.classList.contains("active")) video.classList.remove("active");
     }
 }
 
@@ -75,7 +75,7 @@ function stopRecording() {
     recordingText.classList.add("hidden");
 
     const video = document.querySelector('.video-feedback');
-    video.classList.toggle("active");
+    if (video.classList.contains("active")) video.classList.remove("active");
 }
 
 function handleDataAvailable(e) {

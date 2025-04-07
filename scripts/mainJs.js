@@ -18,6 +18,28 @@ function isMobile() {
 if (isMobile()) 
     recordArea.style.display = "none";
 
+function isChromiumBased() {
+    const ua = navigator.userAgent;
+    const isChromium = ua.includes("Chrome") || ua.includes("Edg") || ua.includes("Vivaldi");
+
+    // Brave doesn't set unique UA, so we can guess based on `navigator.brave` presence
+    const isBrave = navigator.brave !== undefined;
+
+    return isChromium || isBrave;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (!isChromiumBased()) {
+        document.querySelector('.recordArea').style.display = "none";
+    }
+});
+
+// vypis statusu co sa deje - konkretne nazov kanalu
+let currentTextShow = "";
+function textToShow(title) {
+    currentTextShow = title;
+}
+
 function createNewWindow() {
     let recordBtnInMain = mainWindow.document.querySelector(".start-recording");
     recordBtnInMain.setAttribute("disabled", "");
@@ -27,7 +49,6 @@ function createNewWindow() {
 
     let videoPlayerHLSFullscreen = mainWindow.document.getElementById("video_player");
     videoPlayerHLSFullscreen.classList.add("showInFullscreen");
-    // videoPlayerHLSFullscreen.removeAttribute("controls");
     videoPlayerHLSFullscreen.querySelector("#video_player .video_controls").style.display = "none";
 
     mainHtml = mainWindow.document.querySelector("html");
@@ -71,7 +92,6 @@ function createNewWindow() {
                             <h3>Prebieha nahrávanie...</h3>
                         </div>
                         <p style="font-size: 12px;">Video je momentálne prehrávané vo fejkovom fullscreene. Pre jeho zrušenie je potrebné vypnúť okno pre nahrávanie záznamu. 🦦</p>
-                        <p style="font-size: 10px;">Rozdiel na nahrávke nevidno, nakoľko ide aj tak o zachytávanie okna.</p>
                     </div>
                     <div class="popupBtns" style="display: flex; justify-content: center; gap: 10px;">
                         <button class="start-recording btn popup">
@@ -83,6 +103,7 @@ function createNewWindow() {
                             Zastaviť nahrávanie
                         </button>
                     </div>
+                    <p style="display: none;" id="playedChannel">${currentTextShow}</p>
                 </div>
                 <a class="download-video btn download popup" disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 242.7-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7 288 32zM64 352c-35.3 0-64 28.7-64 64l0 32c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-32c0-35.3-28.7-64-64-64l-101.5 0-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352 64 352zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
@@ -106,7 +127,6 @@ function createNewWindow() {
         if (videoPlayerFullscreen.classList.contains("showInFullscreen")) videoPlayerFullscreen.classList.remove("showInFullscreen");
         if (videoPlayerHLSFullscreen.classList.contains("showInFullscreen")) {
             videoPlayerHLSFullscreen.classList.remove("showInFullscreen");
-            // videoPlayerHLSFullscreen.setAttribute("controls", "");
             videoPlayerHLSFullscreen.querySelector("#video_player .video_controls").style.display = "flex";
         }
         mainHtml.style.overflow = "auto";
@@ -123,7 +143,7 @@ mainWindow.onbeforeunload = function () {
 function loadCustomPlaylist() {
     const input = document.createElement('input');
     input.type = 'file';
-    input.accept = '.m3u,.txt';
+    input.accept = '.m3u,.m3u8,.txt';
     input.style.display = 'none';
     input.onchange = function() {
         const file = input.files[0];
@@ -182,7 +202,7 @@ playlistElement.classList.remove("empty");
             // const matchTitle = line.match(/tvg-name="(.*?)"/);
             const matchTitle = line.match(/,(.*)$/);
             currentTitle = matchTitle && matchTitle[1] ? matchTitle[1] : "Bez názvu";
-            // if (currentTitle.length > 22) currentTitle = currentTitle.substring(0, 19) + "...";
+            if (currentTitle !== "Bez názvu") currentTitle = currentTitle.split("(")[0].trim();
 
             // Extract logo URL
             const matchLogo = line.match(/tvg-logo="(.*?)"/);
@@ -200,8 +220,6 @@ playlistElement.classList.remove("empty");
             const matchVLC = line.match(/vlc="(.*?)"/);
             if (matchVLC && matchVLC[1] === "true") {
                 vlc = "true";
-                // currentTitle += " (VLC)";
-                // if (currentTitle.length > 22) currentTitle = currentTitle.substring(0, 19) + "...";
             } else {
                 vlc = "false";
             }
@@ -315,7 +333,7 @@ function updatePlaylistDisplay(selectedGroup, channelsByGroup) {
             }
 
             const link = document.createElement('a');
-            link.href = '#';
+            // link.href = '#';
             link.textContent = `${index + 1}. ${channel.title.trim()}`;
             link.onclick = channel.inVLC === "true" ? 
                 () => downloadM3U(channel.url, channel.title.split('(')[0], channel.headerOpt) :
@@ -503,12 +521,6 @@ function downloadM3U(url, title, option) {
     document.body.removeChild(a);
 }
 
-// vypis statusu co sa deje
-let currentTextShow = "";
-function textToShow(title) {
-    currentTextShow = title;
-}
-
 function defineVideoDiv(videoDiv) {
     //videoDiv defined
 
@@ -539,3 +551,67 @@ function defineVideoDiv(videoDiv) {
         channelName.innerHTML = currentTextShow;
     });
 }
+
+(function () {
+    const text = document.querySelector('.pTagOverflow');
+    const container = document.querySelector('#pTagWrapper');
+
+    let direction = -1;
+        let timeoutId = null;
+        let isAnimating = false;
+
+    function clearScroll() {
+        clearTimeout(timeoutId);
+        text.style.transitionDuration = '0ms';
+        text.style.transform = 'translateX(0)';
+        isAnimating = false;
+    }
+
+    function scrollOnce(scrollAmount, duration, pause) {
+        if (isAnimating) return;
+        isAnimating = true;
+
+        function doScroll() {
+            const distance = direction === -1 ? -scrollAmount : 0;
+            text.style.transitionDuration = duration + 'ms';
+            text.style.transform = `translateX(${distance}px)`;
+
+            timeoutId = setTimeout(() => {
+                direction *= -1;
+                doScroll();
+            }, duration + pause);
+        }
+
+        doScroll();
+    }
+
+    function updateAnimation() {
+        clearScroll();
+
+        const textWidth = text.scrollWidth;
+        const containerWidth = container.clientWidth;
+        const scrollAmount = textWidth - containerWidth;
+
+        if (scrollAmount <= 0) return;
+
+        const speed = 25; // pixels per second
+        const duration = (scrollAmount / speed) * 1000; // ms
+        const pause = 2250; // pause at ends in ms
+
+        // Start after small initial delay
+        setTimeout(() => {
+        scrollOnce(scrollAmount, duration, pause);
+        }, 500);
+    }
+
+    // Run on load and resize (debounced)
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(updateAnimation, 300);
+    });
+
+    window.addEventListener('load', () => {
+        updateAnimation();
+    });
+})();

@@ -2,6 +2,22 @@
     interpolate-size: allow-keywords;
 } */
 
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #acacac;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #707070;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #686868;
+  }
+
 body {
     font-family: "Comfortaa", sans-serif;
     font-optical-sizing: auto;
@@ -273,6 +289,7 @@ body {
     align-items: center;
     justify-content: center;
     gap: 2px;
+    height: 15px;
 }
 
 .bars span {
@@ -298,35 +315,44 @@ body {
     animation: none;
 }
 
-.currentlyPlaying p {
+.currentlyPlaying #pTagWrapper {
     margin: 10px 0;
 }
 
-.currentlyPlaying p, .currentlyPlaying .bars {
+.currentlyPlaying #pTagWrapper, .currentlyPlaying .bars {
     opacity: 0;
     transition: opacity 0.15s ease-in-out 0.25s;
 }
 
-.currentlyPlaying.visible p {
-    color: #33ff409c;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: break-spaces;
-    line-height: 2;
-}
 
-.currentlyPlaying p span.defaultText {
+.currentlyPlaying.visible #pTagWrapper {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
     color: #f2f2f2;
 }
 
-.currentlyPlaying p span.channelName {
+.currentlyPlaying #pTagWrapper span.channelName {
     font-weight: 900;
+    color: #33ff409c;
 }
 
-.currentlyPlaying.visible p, .currentlyPlaying.visible .bars {
+.currentlyPlaying.visible #pTagWrapper, .currentlyPlaying.visible .bars {
     opacity: 1;
     transition: opacity 0.15s ease-in-out;
 }
+
+.pTagOverflow {
+    display: inline-block;
+    white-space: nowrap;
+    position: relative;
+    will-change: transform;
+    transition-property: transform;
+    transition-timing-function: linear; /* <== THIS makes it truly constant speed */
+    padding: 0 2px;
+}
+
 
 @keyframes bar {
     0%{
@@ -414,6 +440,7 @@ div#videoPlayer.showInFullscreen .vjs-control-bar {
     outline: none;
     transition: all 0.15s ease-in-out;
     line-height: 1.5;
+    margin: 0 auto;
 }
 
 #groupFilter:hover {
@@ -427,10 +454,16 @@ div#videoPlayer.showInFullscreen .vjs-control-bar {
 
 .filterLabel {
     color: #f2f2f2;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1rem;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.filterLabel label {
+    text-decoration: underline; 
+    text-underline-offset: 2px;
+    font-weight: 900;
 }
 
 .filterSelect {
@@ -466,6 +499,13 @@ div#videoPlayer.showInFullscreen .vjs-control-bar {
 .filterSelect > div {
     padding-bottom: 5px;
     overflow: auto;
+}
+
+.filterSelect .chosenGroup {
+    margin: 0; 
+    text-align: center; 
+    color: #f2f2f2; 
+    margin-bottom: 15px;
 }
 
 #groupFilter::-ms-expand {
@@ -640,9 +680,25 @@ i.left, svg.left {
     right: 20px; 
 }
 
+.start-recording:not(.popup) {
+    background: #b02929;
+    box-shadow: 0 0 5px 3px #b0292959;
+    transition: all 0.15s ease-in-out;
+}
+
 .start-recording[disabled] {
     opacity: 0.5;
     cursor: default;
+    box-shadow: none;
+    background: #505050;
+}
+
+.start-recording:not(.popup):hover {
+    background: #a32525;
+    box-shadow: 0 0 5px 3px #a3252559;
+}
+
+.start-recording[disabled]:hover {
     box-shadow: none;
     background: #505050;
 }
@@ -679,7 +735,7 @@ i.left, svg.left {
 }
 
 .recordingActive h3 {
-    margin: 10px 0;
+    margin: 8px 0;
 }
 
 .recordingDot {
@@ -697,6 +753,7 @@ i.left, svg.left {
     align-items: center;
     max-width: 80%;
     margin: 0 auto;
+    flex-direction: column;
 }
 
 .infoPanel div {
@@ -740,6 +797,8 @@ i.left, svg.left {
     text-align: center; 
     color: #f2f2f2;
     margin-top: 40px;
+    max-width: 80%;
+    margin: 0 auto;
 }
 
 .testYourLink span {
@@ -755,6 +814,13 @@ i.left, svg.left {
 
 .testYourLink a:hover {
     color: #33ff409c;
+}
+
+.testYourLink p:nth-child(1) {
+    margin-bottom: 5px;
+}
+.testYourLink p:nth-child(2) {
+    margin-top: 0;
 }
 
 .recordContentWrapper {
@@ -840,6 +906,59 @@ i.left, svg.left {
     transition: visibility 0.3s, opacity 0.3s, width 0.3s, left 0.3s 1s, top 0.3s 1s;
 }
 
+/*default*/
+.infoPanel table {
+    background: #505050;
+    padding: 14px;
+    margin-top: 20px;
+    border-radius: 20px;
+    color: #f2f2f2;
+    text-align: center;
+    box-shadow: 0 0 3px 1px #33ff409c;
+}
+
+.infoPanel table td:nth-child(1) {
+    text-align: left;
+    font-weight: 600;
+    max-width: 200px;
+}
+
+.infoPanel table th {
+    font-size: 18px;
+    padding: 10px 0;
+}
+
+.infoPanel table td {
+    padding: 5px;
+}
+
+.infoPanel table tr:nth-child(2) td:nth-child(3),
+.infoPanel table tr:nth-child(3) td:nth-child(3),
+.infoPanel table tr:nth-child(4) td:nth-child(3),
+.infoPanel table tr:nth-child(5) td:nth-child(3) {
+    padding: 5px 15px;
+    border-left: 1px solid #707070;
+    border-right: 1px solid #707070;
+}
+
+.infoPanel table tr:nth-child(1) td {
+    font-weight: 600;
+}
+
+.infoPanel table tr:nth-child(6) td {
+    padding-top: 10px;
+}
+
+.infoPanel table td a {
+    font-size: 18px;
+    color: #f2f2f2;
+    transition: all 0.15s ease-in-out;
+}
+
+.infoPanel table td a:hover {
+    color: #33ff409c;
+}
+
 @keyframes pulse {
     0% {
         opacity: 0;
@@ -854,7 +973,7 @@ i.left, svg.left {
     }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1320px) {
     .mainContent .playVideoDiv {
         grid-template-columns: 1fr;
     }
@@ -875,6 +994,12 @@ i.left, svg.left {
     }
 }
 
+@media screen and (max-width: 620px) {
+    .infoPanel table  {
+        font-size: 12px;
+    }
+}
+
 @media screen and (max-width: 560px) {
     .playlistWrapper {
         max-width: 90%;
@@ -882,6 +1007,15 @@ i.left, svg.left {
 
     .playlist-group {
         width: 95%;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    .infoPanel table  {
+        font-size: 10px;
+    }
+    .infoPanel table th {
+        font-size: 14px;
     }
 }
 

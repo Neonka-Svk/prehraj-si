@@ -29,8 +29,10 @@
         </div>
         <div class="hidden filterSelect">
             <div>
-                <p class="filterLabel" for="groupFilter"><label style="text-decoration: underline; text-underline-offset: 2px;" for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.</p>
-                <p style="margin: 0; text-align: center; color: #f2f2f2; margin-bottom: 15px;">Aktuálne vybratá skupina:</p>
+                <p class="filterLabel" for="groupFilter">
+                    <label for="groupFilter">Strácaš prehľad?</label> Zvoľ si skupinu programov.
+                </p>
+                <p class="chosenGroup">Aktuálne vybratá skupina:</p>
                 <select class="btn" id="groupFilter"></select>
             </div>
         </div>
@@ -42,7 +44,7 @@
                     <span></span>
                     <span></span>
                 </div>
-                <p><span class="defaultText statusText">Práve sa prehráva -</span> <span class="channelName">najlepší program 🦦</span></p>
+                <div id="pTagWrapper"><p class="pTagOverflow"><span class="defaultText statusText">Aktuálne sa neprehráva nič -</span> <span class="channelName"> 🦦</span></p></div>
             </div>
             <div class="playVideoDiv">
                 <div class="playlistWrapper">
@@ -91,13 +93,55 @@
 
         <div class="testYourLink">
             <p><span>Nejde ti prehrať link?</span> Možno si bol na chvíľu zablokovaný. 🫨 Skopíruj si link a skús ho tu: <a href="https://livepush.io/hlsplayer/index.html" target="_blank">M3U tester</a>.</p>
+            <p>Pre pohodlné sledovanie odporúčam lokálnu verziu: <a href="#" target="_blank">stiahneš tu</a> alebo nižšie uvedené platformy 👇.</p>
         </div>
 
         <div class="infoPanel">
-            <div>
-                <i class="fa-solid fa-circle-info"></i>
-                <p>Niektoré streamy fungujú, aj v prehliadači, aj vo VLC. Avšak niektoré fungujú, buď tu, alebo vo VLC!</p>
-            </div>
+            <table>
+                <thead>
+                    <tr>
+                    <th colspan="4">Ktorú aplikáciu použiť na sledovanie programov?</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td>Open TV</td>
+                        <td>VLC</td>
+                        <td>MPC-HC</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Všetky programy?</td>
+                        <td>🟢</td>
+                        <td>🔴</td>
+                        <td>🟢</td>
+                    </tr>
+                    <tr>
+                        <td>Intuitívne ovládanie?</td>
+                        <td>🟢</td>
+                        <td>🟢</td>
+                        <td>🟠</td>
+                    </tr>
+                    <tr>
+                        <td>Nahrávanie záznamu?</td>
+                        <td>🟢</td>
+                        <td>🟢</td>
+                        <td>🔴</td>
+                    </tr>
+                    <tr>
+                        <td>Multiplatformový?</td>
+                        <td>🟢</td>
+                        <td>🟢</td>
+                        <td>🔴</td>
+                    </tr>
+                    <tr>
+                        <td>Stiahni si danú aplikáciu 👉</td>
+                        <td><a href="https://github.com/Fredolx/open-tv/releases"><i class="fa-solid fa-download"></i></a></td>
+                        <td><a href="https://www.videolan.org/vlc/"><i class="fa-solid fa-download"></i></a></td>
+                        <td><a href="https://github.com/clsid2/mpc-hc/releases"><i class="fa-solid fa-download"></a></i></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="copyPopup">

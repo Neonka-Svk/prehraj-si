@@ -8,6 +8,22 @@ let stream = null,
     recordedVideo = null;
 
 let recordingText = document.querySelector(".recordingActive");
+let startTimeAndDate = "";
+let endTimeAndDate = "";
+
+function formatDate(date) {
+    const pad = num => String(num).padStart(2, '0');
+  
+    const day = pad(date.getDate());
+    const month = pad(date.getMonth() + 1); // Months are 0-indexed
+    const year = date.getFullYear();
+    const hours = pad(date.getHours());
+    const minutes = pad(date.getMinutes());
+    const seconds = pad(date.getSeconds());
+  
+    return `${day}${month}${year}_${hours}${minutes}${seconds}`;
+  }
+  
 
 async function setupStream() {
     try {
@@ -58,6 +74,7 @@ async function startRecording() {
 
         if (recordingText.classList.contains("hidden")) recordingText.classList.remove("hidden");
     
+        startTimeAndDate = formatDate(new Date());
         console.log('Recording started');
     } else {
         console.warn('No stream available.');
@@ -83,11 +100,13 @@ function handleDataAvailable(e) {
 }
 
 function handleStop(e) {
+    endTimeAndDate = formatDate(new Date());
+    let playedChannel = document.getElementById("playedChannel").innerText;
     const blob = new Blob(chunks, { 'type': 'video/mp4' });
     chunks = [];
 
     downloadButton.href = URL.createObjectURL(blob);
-    downloadButton.download = 'video.mp4';
+    downloadButton.download = `${playedChannel} (záznam) - (${startTimeAndDate} - ${endTimeAndDate}).mp4`;
 
     stopRecording();
 
